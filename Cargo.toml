@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "src/server",
+    "src/server-cli",
+    "src/client",
+    "src/client-cli",
+    "src/protocol",
+]
+
+resolver = "3"
