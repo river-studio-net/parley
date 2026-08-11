@@ -1,0 +1,21 @@
+syntax = "proto3";
+package message_service;
+
+
+import "proto/parley.proto";
+
+
+message MessageRequest {
+  models.User from = 1;
+  models.Group to = 2;
+  string ciphertext = 3;
+}
+
+message MessageRequestResult {
+  bool status = 1;
+  string text = 2;
+}
+
+service MessageService {
+  rpc SendMessage (MessageRequest) returns (MessageRequestResult);
+}

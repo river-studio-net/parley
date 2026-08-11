@@ -1,0 +1,20 @@
+syntax = "proto3";
+package models;
+
+message Result {
+  oneof result {
+    string Err = 1;
+    string Ok = 2;
+  }
+}
+
+message User {
+  string id = 1;
+  string display_name = 2;
+}
+
+message Group {
+  string id = 1;
+  string display_name = 2;
+}
+

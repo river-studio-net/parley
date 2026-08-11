@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+tonic = "*"
+prost = "0.14"
+tonic-prost = "*"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+tonic-reflection = "*"
+
+[build-dependencies]
+tonic-prost-build = "*"
+
