@@ -1,20 +1,38 @@
 syntax = "proto3";
 package models;
 
-message Result {
-  oneof result {
-    string Err = 1;
-    string Ok = 2;
-  }
-}
 
 message User {
-  string id = 1;
+  string uuid7 = 1;
   string display_name = 2;
 }
 
-message Group {
-  string id = 1;
+message Channel {
+  string uuid7 = 1;
+  string display_name = 2;
+  Commune commune = 3;
+}
+
+message Commune {
+  string uuid7 = 1;
   string display_name = 2;
 }
+
+message TextMessage {
+  string uuid7 = 1;
+  User from = 2;
+  Commune destination = 3;
+  string content = 4;
+}
+
+message UserCommunes {
+  User user = 1;
+  [Commune] communes = 2;
+}
+
+message CommuneUsers {
+  Commune commune = 1;
+  [User] users = 2;
+}
+
 

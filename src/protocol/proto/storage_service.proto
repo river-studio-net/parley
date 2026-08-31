@@ -1,0 +1,30 @@
+syntax "proto3";
+package storage_service;
+
+import "proto/parley.proto";
+
+
+enum Action {
+  CREATE = 1;
+  READ = 2;
+  UPDATE = 3;
+  DELETE = 4;
+}
+
+message StorageActionRequest {
+  required models.User actor = 1;
+  required Action action = 2;
+  string uri = 3;
+  bytes content = 4;
+}
+
+message StorageActionResult {
+  oneof result {
+    string uri = 1;
+    string err = 2;
+  }
+}
+
+service StorageService {
+  rpc ActOnObject(StorageActionRequest) returns (StorageActionResult);
+}

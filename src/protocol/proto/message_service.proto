@@ -5,17 +5,18 @@ package message_service;
 import "proto/parley.proto";
 
 
-message MessageRequest {
-  models.User from = 1;
-  models.Group to = 2;
-  string ciphertext = 3;
+message SendMessageResult {
+  oneof result {
+    string message_id = 1;
+    string err = 2; 
+  }
 }
 
-message MessageRequestResult {
-  bool status = 1;
-  string text = 2;
+message GetMessagesRequest {
+  string channel_id = 1;
 }
 
 service MessageService {
-  rpc SendMessage (MessageRequest) returns (MessageRequestResult);
+  rpc SendMessage (models.TextMessage) returns (MessageRequestResult);
+  rpc GetMessages (GetMessagesRequest) returns (stream models.TextMessage);
 }
