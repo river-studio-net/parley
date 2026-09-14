@@ -7,7 +7,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     tonic_prost_build::configure()
         .file_descriptor_set_path(out_path.join("parley_descriptor.bin"))
-        .compile_protos(&["proto/parley.proto","proto/message_service.proto"], 
+        .compile_protos(&["../../../models/parley.proto","../../../models/message_service.proto"], 
             &["models", "message_service"])?;
     
     Ok(())

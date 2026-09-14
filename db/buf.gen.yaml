@@ -1,0 +1,8 @@
+version: v2
+inputs:
+  - directory: ../models
+plugins:
+  - local: protoc-gen-sqlmodel
+    out: ./src/db/
+    # opt:
+    #   - tables_only=true
