@@ -14,8 +14,8 @@ from sqlmodel import Field, JSON, Relationship, SQLModel
 
 
 class UsersCommunesLink(SQLModel, table=True):
-    user_id: str = Field(default=None, foreign_key="user.id", primary_key=True)
-    commune_id: str = Field(default=None, foreign_key="commune.id", primary_key=True)
+    user_id: UUID = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="user.id"), default=None)
+    commune_id: UUID = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="commune.id"), default=None)
 
 
 class User(SQLModel, table=True):
@@ -28,18 +28,18 @@ class User(SQLModel, table=True):
 class Message(SQLModel, table=True):
     id: UUID = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, server_default=text("uuidv7()")), default=None)
     text: str
-    owner_id: str | None  = Field(default=None, foreign_key="user.id")
-    owner: User | None  = Relationship()
-    channel_id: str | None  = Field(default=None, foreign_key="channel.id")
-    channel: Channel | None  = Relationship(back_populates="messages")
+    owner_id: UUID | None = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="user.id"), default=None)
+    owner: User | None = Relationship()
+    channel_id: UUID | None = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="channel.id"), default=None)
+    channel: Channel | None = Relationship(back_populates="messages")
 
 
 class Channel(SQLModel, table=True):
     id: UUID = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, server_default=text("uuidv7()")), default=None)
-    commune_id: str | None  = Field(default=None, foreign_key="commune.id")
-    commune: Commune | None  = Relationship(back_populates="channels")
-    category_id: str | None  = Field(default=None, foreign_key="category.id")
-    category: Category | None  = Relationship(back_populates="categories")
+    commune_id: UUID | None = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="commune.id"), default=None)
+    commune: Commune | None = Relationship(back_populates="channels")
+    category_id: UUID | None = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="category.id"), default=None)
+    category: Category | None = Relationship(back_populates="categories")
     mls_details: dict[str, str] = Field(sa_type=JSON)
 
 
@@ -47,8 +47,8 @@ class Category(SQLModel, table=True):
     id: UUID = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, server_default=text("uuidv7()")), default=None)
     category_details: dict[str, str] = Field(sa_type=JSON)
     channels: list[Channel] = Relationship(back_populates="category")
-    commune_id: str | None  = Field(default=None, foreign_key="commune.id")
-    commune: Commune | None  = Relationship(back_populates="categories")
+    commune_id: UUID | None = Field(sa_column=Column(UUID_(as_uuid=True), primary_key=True, nullable=False, foreign_key="commune.id"), default=None)
+    commune: Commune | None = Relationship(back_populates="categories")
 
 
 class Commune(SQLModel, table=True):
