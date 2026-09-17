@@ -3,16 +3,21 @@ pub use message_service::message_service_server::{ MessageService, MessageServic
 pub use message_service::message_service_client::MessageServiceClient;
 
 
-pub mod models {
-    tonic::include_proto!("models");
+pub mod tables {
+    tonic::include_proto!("parley.tables");
 }
 
 
-pub mod message_service {
-    tonic::include_proto!("message_service");
+pub mod server_models {
+    tonic::include_proto!("parley.server_models");
+}
+
+
+pub mod services {
+    tonic::include_proto!("parley.services");
 
     pub const FILE_DESCRIPTOR_SET: &[u8] = 
-        tonic::include_file_descriptor_set!("parley_descriptor");
+        tonic::include_file_descriptor_set!("services_descriptor");
 }
 
 #[cfg(test)]

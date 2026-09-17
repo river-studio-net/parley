@@ -7,8 +7,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     tonic_prost_build::configure()
         .file_descriptor_set_path(out_path.join("parley_descriptor.bin"))
-        .compile_protos(&["../../../models/parley.proto","../../../models/message_service.proto"], 
-            &["models", "message_service"])?;
+        .protoc_arg("--proto_path=/Users/riversong/git/river-studio-net/parley/models")
+        .compile_protos(&["tables.proto","server_models.proto","services.proto"], 
+            &["tables", "server_models", "services"])?;
     
     Ok(())
 }
