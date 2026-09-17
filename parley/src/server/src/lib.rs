@@ -1,14 +1,15 @@
 pub use tonic::{transport::Server, transport::server::Router, Request, Response, Status };
 use tonic_reflection::server::Error;
-pub use protocol::message_service::message_service_server::{ MessageService, MessageServiceServer };
-pub use protocol::message_service::{ MessageRequest, MessageRequestResult, FILE_DESCRIPTOR_SET };
+pub use protocol::services::services::{ Parley, ParleyServer };
+pub use protocol::services::{ GetCommuneStructureRequest, FILE_DESCRIPTOR_SET };
+pub use protocol::tables::{ Commune };
 
 
 #[derive(Debug, Default)]
-pub struct PublicServer {}
+pub struct ParleyService {}
 
 
-impl PublicServer {
+impl ParleyService {
     pub fn build_router() -> Result<Router, Error> {
         let reflection_service = tonic_reflection::server::Builder::configure()
             .register_encoded_file_descriptor_set(FILE_DESCRIPTOR_SET)
@@ -16,18 +17,20 @@ impl PublicServer {
     
         Ok(Server::builder()
             .add_service(reflection_service)
-            .add_service(MessageServiceServer::new(Self::default())))
+            .add_service(ParleyServer::new(Self::default())))
     }
 }
 
 #[tonic::async_trait]
-impl MessageService for PublicServer {
-    async fn send_message(&self, request: Request<MessageRequest>) -> Result<Response<MessageRequestResult>, Status> {
-        println!("Got a request: {:?}", request);
+impl ParleyServer for ParleyService {
+    fn get_commune_structure(
+        &self,
+        request: Request<GetCommuneStructureRequest>
+    ) -> Result<Response<Commune>, Status> {
+        println!("request: {:?}", request);
 
         let input = request.get_ref();
-
-        Ok(Response::new(MessageRequestResult{status: true, text: input.ciphertext.clone()}))
+        Err(Status::Error)
     }
 }
 
